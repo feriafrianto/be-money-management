@@ -21,11 +21,11 @@ class CategoryTableSeeder extends Seeder
         $categories =  [
             [
               'name' => 'Makanan & Minuman',
-              'image' => 'superadmin@gmail.com',
+              'image' => 'https://i.imgur.com/Posr0u0.png',
             ],
             [
                 'name' => 'Kesehatan',
-                'image' => 'superadmin@gmail.com',
+                'image' => 'https://i.imgur.com/8rtOruM.png',
               ],
           ];
 
