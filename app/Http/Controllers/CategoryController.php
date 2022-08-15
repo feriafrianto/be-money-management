@@ -12,9 +12,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Category::all();
+        $data = Category::where('type',$request->type)->get();
 
         return response()->json([
             'data' => $data
@@ -42,7 +42,8 @@ class CategoryController extends Controller
         $data = new Category();
 
         $data->name = $request->name;
-        $data->image = '/storage/' . $request->file('image')->store('categories','public');;
+        $data->image = '/storage/' . $request->file('image')->store('categories','public');
+        $data->type = $request->type;
 
         $data->save();
 
