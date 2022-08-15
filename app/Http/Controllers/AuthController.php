@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
-    }
-
     public function login(Request $request)
     {
         $request->validate([
@@ -86,5 +82,45 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+    }
+    public function profile()
+    {
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+            $users = User::find($id);
+            return response()->json([
+                'status' => 'success',
+                'data' => $users
+            ],200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'messege' => 'User not authorized'
+            ],401);
+        }
+    }
+    public function profileedit(Request $request){
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+            $users = User::find($id);
+            $users->name = $request->name;
+            $users->email = $request->email;
+            $users->notelp = $request->notelp;
+            $users->tglahir = $request->tglahir;
+            $users->password = Hash::make($request->password);
+            $users->photo = $request->file('photo')->store('photos','public');
+            $users->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User berhasil diupdate',
+                'data' => $users
+            ],200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'messege' => 'User not authorized'
+            ],401);
+        }
     }
 }

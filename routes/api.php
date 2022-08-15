@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+    Route::put('profile','profileedit');
+    Route::get('profile','profile');
 });
 
 Route::get('/categories', [CategoryController::class, 'index']);
