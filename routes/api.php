@@ -29,6 +29,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
 
 Route::group(['prefix'=>'transcations','as'=>'transcation.'], function(){
     Route::get('/', [TransactionController::class, 'index'])->name('index');

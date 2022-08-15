@@ -39,7 +39,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Category();
+
+        $data->name = $request->name;
+        $data->image = '/storage/' . $request->file('image')->store('categories','public');;
+
+        $data->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Category berhasil ditambahkan',
+            'data' => $data
+        ],200);
     }
 
     /**
