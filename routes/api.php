@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -36,4 +37,11 @@ Route::group(['prefix'=>'transcations','as'=>'transcation.'], function(){
     Route::get('/{id}',[TransactionController::class,'show']);
     Route::post('/store', [TransactionController::class, 'store'])->name('store');
     Route::delete('/destroy/{id}', [TransactionController::class, 'destroy'])->name('destroy');
+});
+
+Route::group(['prefix'=>'wallets','as'=>'wallet.'], function(){
+    Route::get('/', [WalletController::class, 'index'])->name('index');
+//    Route::get('/{id}',[TransactionController::class,'show']);
+    Route::post('/store', [WalletController::class, 'store'])->name('store');
+//    Route::delete('/destroy/{id}', [TransactionController::class, 'destroy'])->name('destroy');
 });
