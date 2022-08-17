@@ -39,7 +39,7 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -108,7 +108,9 @@ class AuthController extends Controller
             $users->notelp = $request->notelp;
             $users->tglahir = $request->tglahir;
             $users->password = Hash::make($request->password);
-            $users->photo = $request->file('photo')->store('photos','public');
+            $image  = $request->file('photo');
+            $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
+            $users->photo = $result;
             $users->save();
 
             return response()->json([
