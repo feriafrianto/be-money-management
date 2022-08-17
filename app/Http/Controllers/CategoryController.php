@@ -42,7 +42,9 @@ class CategoryController extends Controller
         $data = new Category();
 
         $data->name = $request->name;
-        $data->image = '/storage/' . $request->file('image')->store('categories','public');
+        $image  = $request->file('image');
+        $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
+        $data->image = $result;
         $data->type = $request->type;
 
         $data->save();
